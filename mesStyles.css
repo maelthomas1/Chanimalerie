@@ -1,0 +1,37 @@
+.bg-pink {
+    background-color: #ffb4da;
+}
+
+.text-pink {
+    color: #ffb4da;
+}
+
+.btn-pink {
+    background-color: #ffb4da;
+    color: white;
+    border: none;
+}
+
+.btn-pink:hover {
+    background-color: #ffdaec;
+    color: white;
+}
+
+.alert-pink {
+    background-color: #ffb4da;
+    color: white;
+    border: none;
+}
+
+.titre-stroke {
+    color: white;
+    -webkit-text-stroke: 1px #ff89c4; /* Épaisseur et couleur */
+}
+
+.logo-nav {
+    height: 35px;            /* Ajuste la hauteur selon ton bouton */
+    width: auto;             /* Garde les proportions de l'image */
+    margin-right: 6px;       /* Ajoute un petit espace avec le texte */
+    vertical-align: middle;  /* Aligne l'image sur la ligne du texte */
+    display: inline-block;
+}
