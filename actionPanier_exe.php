@@ -1,45 +1,40 @@
 <?php
-
-$tmpPath = __DIR__ . "/tmp";
-if (is_dir($tmpPath)) {
-    session_save_path($tmpPath);
-}
 session_start();
 
 require "./info_bdd.php";
 
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['utilisateur'])) {
     header("Location: index.php?page=connexionClient&erreur=Veuillez vous connecter pour ajouter au panier");
     exit();
 }
 
-$numProduit = $_POST['numProduit'] ?? '';
+$idProduit = $_POST['idProduit'] ?? '';
 $quantite = $_POST['quantite'] ?? '';
-$idClient = $_SESSION['user']['idClient'];
+$idClient = $_SESSION['utilisateur']['idClient'];
 
-if ($numProduit != '' && $quantite > 0) {
+if ($idProduit != '' && $quantite > 0) {
     try {
-        $requete = "SELECT noCommande FROM commande WHERE idClient = :idC AND idStatut = 'PAN'";
+        $requete = "SELECT idCommande FROM commande WHERE idClient = :idC AND idStatut = 'PAN'";
         $stmt = $pdo->prepare($requete);
         $stmt->execute(['idC' => $idClient]);
         $panier = $stmt->fetch();
 
         if ($panier) {
-            $noCommande = $panier['noCommande'];
+            $idCommande = $panier['idCommande'];
         } else {
             $sqlCreate = "INSERT INTO commande (idClient, idStatut, dateCommande) VALUES (:idC, 'PAN', CURDATE())";
             $pdo->prepare($sqlCreate)->execute(['idC' => $idClient]);
-            $noCommande = $pdo->lastInsertId();
+            $idCommande = $pdo->lastInsertId();
         }
 
-        $sqlAdd = "INSERT INTO contenir (noCommande, numProduit, quantite) 
-                   VALUES (:noC, :numP, :qte)
+        $sqlAdd = "INSERT INTO contenir (idCommande, idProduit, quantite) 
+                   VALUES (:idC, :idP, :qte)
                    ON DUPLICATE KEY UPDATE quantite = quantite + :qte";
-        $pdo->prepare($sqlAdd)->execute(['noC' => $noCommande, 'numP' => $numProduit, 'qte' => $quantite]);
+        $pdo->prepare($sqlAdd)->execute(['idC' => $idCommande, 'idP' => $idProduit, 'qte' => $quantite]);
 
         header("Location: index.php?page=produits&info=Produit ajouté au panier !");
     } catch (Exception $e) {
-        header("Location: index.php?page=detailProduit&numProduit=$numProduit&erreur=Erreur lors de l'ajout");
+        header("Location: index.php?page=detailProduit&idProduit=$idProduit&erreur=Erreur lors de l'ajout");
     }
 } else {
     header("Location: index.php?page=produits&erreur=Données invalides");

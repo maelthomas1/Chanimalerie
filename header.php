@@ -1,12 +1,7 @@
 <?php
-
-$tmpPath = __DIR__ . "/tmp";
-if (is_dir($tmpPath)) {
-    session_save_path($tmpPath);
-}
 session_start();
 
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['utilisateur'])) {
     $connecte = true;
 } else {
     $connecte = false;
@@ -72,7 +67,7 @@ if (isset($_SESSION['user'])) {
                 </ul>
                 <div class="d-flex ms-auto align-items-center">
                     <?php if ($connecte) { ?>
-                        <span class="text-muted me-3"><?php echo $_SESSION['user']['prenom']; ?></span>
+                        <span class="text-muted me-3"><?php echo $_SESSION['utilisateur']['prenom']; ?></span>
 
                         <form action="deconnexion.php" method="post" class="m-0">
                             <button type="submit" class="btn text-pink p-0">

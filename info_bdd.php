@@ -5,17 +5,13 @@ $dbname = 'chanimalerie';
 // BDD proxmox
 // $dbname = 'chanimalerie';
 
-// Connexion maison
+// Connexion maison/lycée
 $username = 'root';
 $password = '';
 
-// // Connexion lycée
-// $username = 'myroot';
-// $password = 'root123*';
-
 // Connexion Proxmox
 // $username = 'adminer';
-// $password = 'belbeoch11@';
+// $password = 'Poireau1';
 
 // Création d'une connexion PDO
 $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password); 

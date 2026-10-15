@@ -1,24 +1,23 @@
 <?php
-session_save_path(__DIR__ . "/tmp");
 session_start();
 require "./info_bdd.php";
 
 // Vérification des droits admin (très important ici !)
-if (!isset($_SESSION['user']) || $_SESSION['roleUser'] != 'adm') {
+if (!isset($_SESSION['utilisateur']) || $_SESSION['roleUtilisateur'] != 'adm') {
     header("Location: index.php?page=connexion&erreur=Accès refusé");
     exit();
 }
 
-$noCommande = $_POST['noCommande'] ?? '';
+$idCommande = $_POST['idCommande'] ?? '';
 $nouveauStatut = $_POST['nouveauStatut'] ?? '';
 
-if ($noCommande != '' && $nouveauStatut != '') {
+if ($idCommande != '' && $nouveauStatut != '') {
     // Mise à jour du statut dans la table commande[cite: 2]
-    $sql = "UPDATE commande SET idStatut = :statut WHERE noCommande = :no";
+    $sql = "UPDATE commande SET idStatut = :statut WHERE idCommande = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         'statut' => $nouveauStatut,
-        'no' => $noCommande
+        'id' => $idCommande
     ]);
 
     header("Location: index.php?page=gestionCommandes&info=Statut mis à jour avec succès");
