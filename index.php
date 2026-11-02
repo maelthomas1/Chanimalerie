@@ -1,3 +1,6 @@
+<!-- s3_bucket = os.getenv("S3_BUCKET")       -->
+<!-- print(s3_bucket) -->
+
 <?php
 
 // 1. Whitelist des pages autorisées
