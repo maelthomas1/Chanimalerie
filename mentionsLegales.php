@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <!-- 8. Médiation de la consommation -->
+        <!-- 7. Médiation de la consommation -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <!-- 9. Informations complémentaires -->
+        <!-- 8. Informations complémentaires -->
         <div class="col-md-6">
             <div class="card shadow-sm border-pink">
                 <div class="card-body">
