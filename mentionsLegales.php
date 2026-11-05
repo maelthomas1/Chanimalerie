@@ -4,6 +4,7 @@
     </div>
 
     <div class="row g-4">
+        <!-- 1. Éditeur du site -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
@@ -18,6 +19,7 @@
             </div>
         </div>
 
+        <!-- 2. Direction de la publication -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
@@ -30,6 +32,7 @@
             </div>
         </div>
 
+        <!-- 3. Hébergement -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
@@ -43,6 +46,7 @@
             </div>
         </div>
 
+        <!-- 4. Propriété intellectuelle -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
@@ -54,6 +58,7 @@
             </div>
         </div>
 
+        <!-- 5. Limitation de responsabilité -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
@@ -65,32 +70,42 @@
             </div>
         </div>
 
+        <!-- 6. Protection des données (RGPD) - Mis à jour -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
                     <h3 class="h5 text-pink border-bottom pb-2">6. Protection des données (RGPD)</h3>
-                    <p class="small">
-                        Conformément au RGPD, vous avez un droit d'accès et de suppression de vos données via <strong>mani@mani.fr</strong>. Conservation des données : 3 ans maximum.
+                    <p class="small mb-2">
+                        <strong>Responsable du traitement :</strong> Société MaNi (contact : <a href="mailto:mani@mani.fr">mani@mani.fr</a>).<br>
+                        <strong>DPO :</strong> Aucun DPO obligatoire désigné (contact direct via la société).
+                    </p>
+                    <p class="small mb-2">
+                        <strong>Finalités & Bases légales :</strong><br>
+                        - Gestion des commandes & exécution du contrat.<br>
+                        - Inscription à la newsletter (consentement).<br>
+                        - Formulaire de contact / support (intérêt légitime).
+                    </p>
+                    <p class="small mb-2">
+                        <strong>Destinataires :</strong> Les services internes de MaNi et nos prestataires techniques (ex. hébergeur OVHcloud).
+                    </p>
+                    <p class="small mb-2">
+                        <strong>Durée de conservation :</strong> Données clients conservées 3 ans après la fin de la relation commerciale ; prospects (newsletter) 3 ans après le dernier contact.
+                    </p>
+                    <p class="small mb-2">
+                        <strong>Vos droits :</strong> Vous disposez d'un droit d'accès, de rectification, d'effacement, d'opposition et de portabilité que vous pouvez exercer en écrivant à <a href="mailto:mani@mani.fr">mani@mani.fr</a>.
+                    </p>
+                    <p class="small mb-0">
+                        <strong>Réclamation :</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a>).
                     </p>
                 </div>
             </div>
         </div>
 
+        <!-- 8. Médiation de la consommation -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
-                    <h3 class="h5 text-pink border-bottom pb-2">7. Cookies</h3>
-                    <p class="small">
-                        Le site utilise des cookies techniques nécessaires au fonctionnement (admin, session). Aucun traçage publicitaire n'est actif sans votre consentement préalable.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm border-pink">
-                <div class="card-body">
-                    <h3 class="h5 text-pink border-bottom pb-2">8. Médiation de la consommation</h3>
+                    <h3 class="h5 text-pink border-bottom pb-2">7. Médiation de la consommation</h3>
                     <p class="small">
                         En cas de litige, vous pouvez saisir le médiateur : Maël THOMAS, chanimalerie.fr. À défaut d'accord, les tribunaux de Quimper seront compétents.
                     </p>
@@ -98,10 +113,11 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <!-- 9. Informations complémentaires -->
+        <div class="col-md-6">
             <div class="card shadow-sm border-pink">
                 <div class="card-body">
-                    <h3 class="h5 text-pink border-bottom pb-2">9. Informations complémentaires</h3>
+                    <h3 class="h5 text-pink border-bottom pb-2">8. Informations complémentaires</h3>
                     <p class="small mb-0">
                         <strong>Accessibilité :</strong> Site non conforme au RGAA.<br>
                         <strong>Démarchage :</strong> Vous avez le droit de vous inscrire sur la liste d'opposition <strong>Bloctel</strong> si vous nous confiez votre numéro de téléphone.
