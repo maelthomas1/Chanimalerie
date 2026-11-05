@@ -3,7 +3,7 @@ require "./info_bdd.php";
 
 // Récupérer 3 produits aléatoires pour la section "Coup de coeur"
 // On utilise ORDER BY RAND() pour que l'accueil change à chaque visite
-$requeteTop = "SELECT numProduit, nomProduit, prixUnitaire, nomImage FROM produit ORDER BY RAND() LIMIT 3";
+$requeteTop = "SELECT idProduit, nomProduit, prixUnitaire, nomImage FROM produit ORDER BY RAND() LIMIT 3";
 $reponseTop = $pdo->query($requeteTop);
 $coupsDeCoeur = $reponseTop->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -12,7 +12,7 @@ $coupsDeCoeur = $reponseTop->fetchAll(PDO::FETCH_ASSOC);
 <div class="text-center p-5 mb-4 bg-light rounded-3 shadow-sm border-start border-pink border-5">
     <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold text-pink">
-            Bienvenue chez Chanimalerie <?php echo isset($_SESSION['user']) ? htmlspecialchars($_SESSION['user']['prenom']) : ''; ?> !
+            Bienvenue chez Chanimalerie <?php echo isset($_SESSION['utilisateur']) ? htmlspecialchars($_SESSION['utilisateur']['prenom']) : ''; ?> !
         </h1>
         <!-- Ajout de mx-auto pour centrer le bloc de 8 colonnes -->
         <p class="col-md-8 fs-4 text-muted mx-auto">
@@ -33,7 +33,7 @@ $coupsDeCoeur = $reponseTop->fetchAll(PDO::FETCH_ASSOC);
     <div class="row g-4">
         <?php foreach ($coupsDeCoeur as $unProduit): ?>
             <div class="col-md-4 col-sm-6">
-                <a href="index.php?page=detailProduit&numProduit=<?php echo $unProduit['numProduit']; ?>"
+                <a href="index.php?page=detailProduit&idProduit=<?php echo $unProduit['idProduit']; ?>"
                     style="text-decoration: none">
                     <div class="card h-100 shadow-sm">
                         <img src="./Images/<?php echo $unProduit['nomImage']; ?>" class="card-img-top"

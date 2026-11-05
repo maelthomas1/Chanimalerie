@@ -1,9 +1,4 @@
 <?php
-
-$tmpPath = __DIR__ . "/tmp";
-if (is_dir($tmpPath)) {
-    session_save_path($tmpPath);
-}
 session_start();
 
 $login = $_POST["login"] ?? '';
@@ -32,7 +27,7 @@ if ($client == false) {
     header("location:index.php?page=connexionClient&&erreur=Problème de connexion");
 } else {
     // Connexion OK
-    $_SESSION['user'] = $client;
+    $_SESSION['utilisateur'] = $client;
     $_SESSION['prenom'] = $client['prenom'];
 
     header('location:index.php?page=produits');

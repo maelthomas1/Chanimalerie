@@ -1,17 +1,17 @@
 <?php
 require "./info_bdd.php";
 
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['utilisateur'])) {
     header("Location: index.php?page=connexionClient&erreur=Connectez-vous pour voir votre panier");
     exit();
 }
 
-$idClient = $_SESSION['user']['idClient'];
+$idClient = $_SESSION['utilisateur']['idClient'];
 
-$requete = "SELECT p.numProduit, p.nomProduit, p.prixUnitaire, c.quantite 
+$requete = "SELECT p.idProduit, p.nomProduit, p.prixUnitaire, c.quantite 
         FROM contenir c
-        JOIN produit p ON c.numProduit = p.numProduit
-        JOIN commande cmd ON c.noCommande = cmd.noCommande
+        JOIN produit p ON c.idProduit = p.idProduit
+        JOIN commande cmd ON c.idCommande = cmd.idCommande
         WHERE cmd.idClient = :idC AND cmd.idStatut = 'PAN'";
 
 $stmt = $pdo->prepare($requete);
@@ -47,7 +47,7 @@ $totalGeneral = 0;
                     <td><?php echo $ligne['quantite']; ?></td>
                     <td><?php echo number_format($totalLigne, 2); ?> €</td>
                     <td>
-                        <a href="supprimerArticle_exe.php?numProduit=<?php echo $ligne['numProduit']; ?>"
+                        <a href="supprimerArticle_exe.php?idProduit=<?php echo $ligne['idProduit']; ?>"
                             class="text-danger" onclick="return confirm('Supprimer cet article ?')">
                             <i class="bi bi-trash-fill"></i>
                         </a>

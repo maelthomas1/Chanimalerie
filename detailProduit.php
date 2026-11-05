@@ -1,11 +1,11 @@
 <?php
 require "./info_bdd.php"; 
 
-if (isset($_GET['numProduit'])) {
-    $numProduit = $_GET['numProduit'];
+if (isset($_GET['idProduit'])) {
+    $idProduit = $_GET['idProduit'];
 
-    $requete = $pdo->prepare("SELECT * FROM produit WHERE numProduit = :num");
-    $requete->execute(['num' => $numProduit]);
+    $requete = $pdo->prepare("SELECT * FROM produit WHERE idProduit = :id");
+    $requete->execute(['id' => $idProduit]);
     $leProduit = $requete->fetch(PDO::FETCH_ASSOC);
 
     if (!$leProduit) {
@@ -30,7 +30,7 @@ if (isset($_GET['numProduit'])) {
             <h3 class="text-pink mb-4"><?php echo $leProduit['prixUnitaire']; ?> €</h3>
             
             <form action="actionPanier_exe.php" method="POST" class="mt-4 p-4 border rounded bg-light">
-                <input type="hidden" name="numProduit" value="<?php echo $leProduit['numProduit']; ?>">
+                <input type="hidden" name="idProduit" value="<?php echo $leProduit['idProduit']; ?>">
                 
                 <div class="mb-3">
                     <label for="quantite" class="form-label fw-bold">Quantité souhaitée :</label>

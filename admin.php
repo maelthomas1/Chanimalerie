@@ -1,6 +1,12 @@
 <?php
-if (isset($_SESSION['user'])) {
-    $connecte = true;
+if (isset($_SESSION['utilisateur'])) {              // TODO : vérifier si l'utilisateur est déjà connecté
+    if ($_SESSION['utilisateur']['role'] === 'adm') {
+        $connecte = true;
+    } else {
+        $connecte = false;
+        header("location:index.php?page=connexion&erreur=Accès refusé. Vous devez être administrateur pour accéder à la partie administration");
+        exit();
+    }
 } else {
     $connecte = false;
     header("location:index.php?page=connexion&erreur=Il faut être authentifié pour accéder à la partie administration");
@@ -10,7 +16,7 @@ require "./info_bdd.php";
 
 
 // Requête pour vérifier si le couple login/mdp est bon
-$requeteSQL = "SELECT codeUser, login, mdp, nom, prenom, role FROM users";
+$requeteSQL = "SELECT idUtilisateur, login, mdp, nom, prenom, role FROM utilisateur";
 
 // Exécution de la requête
 $reponse = $pdo->query($requeteSQL);
@@ -24,7 +30,7 @@ $liste_utilisateurs = $reponse->fetchall(PDO::FETCH_ASSOC);
             <h2 class="mb-4">Administration <i class="bi bi-person-fill-gear"></i></h2>
 
             <div class="alert alert-pink shadow-sm mb-5">
-                <h4>Bienvenue <?php echo $_SESSION['user']['prenom'] ?> - Rôle : <?php echo $_SESSION['roleUser'] ?>
+                <h4>Bienvenue <?php echo $_SESSION['utilisateur']['prenom'] ?> - Rôle : <?php echo $_SESSION['roleUtilisateur'] ?>
                 </h4>
             </div>
 
@@ -39,13 +45,13 @@ $liste_utilisateurs = $reponse->fetchall(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($liste_utilisateurs as $user): ?>
+                        <?php foreach ($liste_utilisateurs as $utilisateur): ?>
                             <tr>
-                                <td><?php echo $user['login'] ?></td>
-                                <td><?php echo $user['nom'] ?></td>
-                                <td><?php echo $user['prenom'] ?></td>
+                                <td><?php echo $utilisateur['login'] ?></td>
+                                <td><?php echo $utilisateur['nom'] ?></td>
+                                <td><?php echo $utilisateur['prenom'] ?></td>
                                 <td>
-                                    <span class="badge bg-secondary"><?php echo $user['role'] ?></span>
+                                    <span class="badge bg-secondary"><?php echo $utilisateur['role'] ?></span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
