@@ -21,3 +21,7 @@
 .flaskenv*
 !.env.project
 !.env.vault
+
+info_bdd.php
+init.sql
+.vscode

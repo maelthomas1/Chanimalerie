@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <!-- 6. Protection des données (RGPD) - Mis à jour -->
+        <!-- 6. Protection des données (RGPD) -->
         <div class="col-md-6">
             <div class="card h-100 shadow-sm border-pink">
                 <div class="card-body">
