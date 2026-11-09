@@ -1,17 +1,18 @@
 <?php
-$s3_bucket = getenv('S3_BUCKET');
-$secret_key = getenv('SECRET_KEY');
+require_once __DIR__ . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
+$cle_hash = getenv('cle_hash');
+$cle_chiffrement = getenv('cle_chiffrement');
 
 /**
- * Hash le mot de passe en utilisant le secret key
+ * Hash le mot de passe en utilisant l'algorithme par défaut
  * @param string $mdp
  * @return string
  */
 function hasher_mdp (string $mdp): string {
-    // PASSWORD_DEFAULT utilise l'algorithme bcrypt par défaut
-    $mdphash = password_hash($mdp . getenv('SECRET_KEY'), PASSWORD_DEFAULT);
-	return $mdphash;
+    return password_hash($mdp, PASSWORD_DEFAULT);
 }
 
 /**
@@ -21,7 +22,7 @@ function hasher_mdp (string $mdp): string {
  * @return bool
  */
 function verifier_mdp(string $mdp, string $hash): bool {
-    return password_verify($mdp . getenv('SECRET_KEY'), $hash);
+    return password_verify($mdp, $hash);
 } 
 
 /**
@@ -43,10 +44,9 @@ function chiffrer_donnee (string $donnee, string $cle_chiffrement): string {
  * @return string
  */
 function dechiffrer_donnee (string $donnee_chiffree, string $cle_chiffrement): string {
-    $donnee_chiffree = base64_decode($donnee_chiffree);
+    $donnee_decodee = base64_decode($donnee_chiffree);
     $iv_length = openssl_cipher_iv_length('aes-256-cbc');
-    $iv = substr($donnee_chiffree, 0, $iv_length);
-	return openssl_decrypt(substr($donnee_chiffree, $iv_length), 'aes-256-cbc', $cle_chiffrement, 0, $iv);
+    $iv = substr($donnee_decodee, 0, $iv_length);
+    return openssl_decrypt(substr($donnee_decodee, $iv_length), 'aes-256-cbc', $cle_chiffrement, 0, $iv);
 }
-
 ?>
