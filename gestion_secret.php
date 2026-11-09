@@ -1,5 +1,6 @@
-s3_bucket = getenv('S3_BUCKET'):
-secret_key = getenv('SECRET_KEY'):
+<?php
+$s3_bucket = getenv('S3_BUCKET');
+$secret_key = getenv('SECRET_KEY');
 
 
 /**
@@ -8,7 +9,7 @@ secret_key = getenv('SECRET_KEY'):
  * @return string
  */
 function hasher_mdp (string $mdp): string {
-        <!-- PASSWORD_DEFAULT utilise l'algorithme bcrypt par défaut -->
+    // PASSWORD_DEFAULT utilise l'algorithme bcrypt par défaut
     $mdphash = password_hash($mdp . getenv('SECRET_KEY'), PASSWORD_DEFAULT);
 	return $mdphash;
 }
@@ -47,3 +48,5 @@ function dechiffrer_donnee (string $donnee_chiffree, string $cle_chiffrement): s
     $iv = substr($donnee_chiffree, 0, $iv_length);
 	return openssl_decrypt(substr($donnee_chiffree, $iv_length), 'aes-256-cbc', $cle_chiffrement, 0, $iv);
 }
+
+?>
