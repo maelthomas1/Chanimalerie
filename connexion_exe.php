@@ -1,9 +1,4 @@
 <?php
-
-$tmpPath = __DIR__ . "/tmp";
-if (is_dir($tmpPath)) {
-    session_save_path($tmpPath);
-}
 session_start();
 
 $login = $_POST["login"] ?? '';

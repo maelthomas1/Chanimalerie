@@ -16,7 +16,7 @@ if (isset($_GET["info"])) {
     <?php
 }
 
-$requete = "SELECT numProduit, nomProduit, prixUnitaire, nomImage FROM produit";
+$requete = "SELECT idProduit, nomProduit, prixUnitaire, nomImage FROM produit";
 $reponse = $pdo->query($requete);
 $lesProduits = $reponse->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -31,7 +31,7 @@ $lesProduits = $reponse->fetchAll(PDO::FETCH_ASSOC);
     <div class="row g-4">
         <?php foreach ($lesProduits as $unProduit): ?>
             <div class="col-md-4 col-sm-6">
-                <a href="index.php?page=detailProduit&numProduit=<?php echo $unProduit['numProduit']; ?>"
+                <a href="index.php?page=detailProduit&idProduit=<?php echo $unProduit['idProduit']; ?>"
                     style="text-decoration: none">
                     <div class="card h-100 shadow-sm">
                         <img src="./Images/<?php echo $unProduit['nomImage']; ?>" class="card-img-top"
