@@ -1,31 +1,38 @@
 <?php
-
-$tmpPath = __DIR__ . "/tmp";
-if (is_dir($tmpPath)) {
-    session_save_path($tmpPath);
-}
 session_start();
 
 $login = $_POST["login"] ?? '';
 $mdp = $_POST["mdp"] ?? '';
 
 require "./info_bdd.php";
+require_once "./gestion_secret.php"; // Chargement des fonctions de vérification
 
-// Requête pour vérifier si le couple login/mdp est bon
-$requeteSQL = "SELECT login, mdp, nom, prenom, role FROM users WHERE login = '$login'
-AND mdp = '$mdp';";
+try {
+    // On récupère le client et son mot de passe haché grâce à son pseudo
+    $statement = $pdo->prepare(
+        "SELECT idClient, nom, prenom, pseudo, mdp FROM client
+         WHERE pseudo = :loginRequete"
+    );
+    $statement->execute([
+        'loginRequete' => $login
+    ]);
+    $client = $statement->fetch(PDO::FETCH_ASSOC);
 
-// echo $requeteSQL; // test de la requête
-$reponse = $pdo->query($requeteSQL);
-$user = $reponse->fetch(PDO::FETCH_ASSOC);
+    // Vérification si le client existe ET si le mot de passe correspond au hash
+    if ($client && verifier_mdp($mdp, $client['mdp'])) {
+        // Connexion OK
+        $_SESSION['user'] = $client;
+        $_SESSION['prenom'] = $client['prenom'];
 
-if ($user == false) {
-    // Connexion KO
-    header("location:index.php?page=connexion&&erreur=Problème de connexion");
-} else {
-    // Connexion OK
-    $_SESSION['user'] = $user;
-    $_SESSION['roleUser'] = $user['role'];
-    header('location:index.php?page=admin');
+        header('location:index.php?page=produits');
+        exit();
+    } else {
+        // Connexion KO
+        header("location:index.php?page=connexionClient&&erreur=Problème de connexion (identifiant ou mot de passe incorrect)");
+        exit();
+    }
+
+} catch (PDOException $monException) {
+    echo "Erreur SQL : " . $monException->getMessage();
 }
 ?>
