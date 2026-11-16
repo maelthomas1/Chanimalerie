@@ -5,22 +5,30 @@ $login = $_POST["login"] ?? '';
 $mdp = $_POST["mdp"] ?? '';
 
 require "./info_bdd.php";
+require_once "./gestion_secret.php";
 
-// Requête pour vérifier si le couple login/mdp est bon
-$requeteSQL = "SELECT login, mdp, nom, prenom, role FROM users WHERE login = '$login'
-AND mdp = '$mdp';";
+try {
+    // Utilisation d'une requête préparée pour récupérer l'utilisateur par son login
+    $statement = $pdo->prepare("SELECT login, mdp, nom, prenom, role FROM utilisateur WHERE login = :login");
+    $statement->execute([
+        'login' => $login
+    ]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-// echo $requeteSQL; // test de la requête
-$reponse = $pdo->query($requeteSQL);
-$user = $reponse->fetch(PDO::FETCH_ASSOC);
+    // Vérification si l'utilisateur existe ET si le mot de passe correspond au hash stocké
+    if ($user && verifier_mdp($mdp, $user['mdp'])) {
+        // Connexion OK
+        $_SESSION['user'] = $user;
+        $_SESSION['roleUser'] = $user['role'];
+        header('location:index.php?page=admin');
+        exit();
+    } else {
+        // Connexion KO
+        header("location:index.php?page=connexion&&erreur=Problème de connexion");
+        exit();
+    }
 
-if ($user == false) {
-    // Connexion KO
-    header("location:index.php?page=connexion&&erreur=Problème de connexion");
-} else {
-    // Connexion OK
-    $_SESSION['user'] = $user;
-    $_SESSION['roleUser'] = $user['role'];
-    header('location:index.php?page=admin');
+} catch (PDOException $monException) {
+    echo "Erreur SQL : " . $monException->getMessage();
 }
 ?>
