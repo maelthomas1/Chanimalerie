@@ -14,23 +14,23 @@ $idClient = $_SESSION['user']['idClient'];
 
 if ($idProduit != '' && $quantite > 0) {
     try {
-        $requete = "SELECT noCommande FROM commande WHERE idClient = :idC AND idStatut = 'PAN'";
+        $requete = "SELECT idCommande FROM commande WHERE idClient = :idC AND idStatut = 'PAN'";
         $stmt = $pdo->prepare($requete);
         $stmt->execute(['idC' => $idClient]);
         $panier = $stmt->fetch();
 
         if ($panier) {
-            $noCommande = $panier['noCommande'];
+            $idCommande = $panier['idCommande'];
         } else {
             $sqlCreate = "INSERT INTO commande (idClient, idStatut, dateCommande) VALUES (:idC, 'PAN', CURDATE())";
             $pdo->prepare($sqlCreate)->execute(['idC' => $idClient]);
-            $noCommande = $pdo->lastInsertId();
+            $idCommande = $pdo->lastInsertId();
         }
 
-        $sqlAdd = "INSERT INTO contenir (noCommande, idProduit, quantite) 
-                   VALUES (:noC, :idP, :qte)
+        $sqlAdd = "INSERT INTO contenir (idCommande, idProduit, quantite) 
+                   VALUES (:idC, :idP, :qte)
                    ON DUPLICATE KEY UPDATE quantite = quantite + :qte";
-        $pdo->prepare($sqlAdd)->execute(['noC' => $noCommande, 'idP' => $idProduit, 'qte' => $quantite]);
+        $pdo->prepare($sqlAdd)->execute(['idC' => $idCommande, 'idP' => $idProduit, 'qte' => $quantite]);
 
         header("Location: index.php?page=produits&info=Produit ajouté au panier !");
     } catch (Exception $e) {
