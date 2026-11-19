@@ -25,6 +25,12 @@ if ($mdpSaisi !== $mdpConfirmSaisi) {
     exit;
 }
 
+// Vérification de la complexité du mot de passe (au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial et au moins 12 caractères)
+if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{12,}$/', $mdpSaisi)) {
+    header("location:index.php?page=inscriptionClient&&erreur=Le mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial et au moins 12 caractères");
+    exit;
+}
+
 // Vérification de la longueur des champs obligatoires
 if (strlen($loginSaisi) < 1 || strlen($mdpSaisi) < 1 || strlen($nomSaisi) < 1 || strlen($prenomSaisi) < 1) {
     header("location:index.php?page=inscriptionClient&&erreur=Veuillez renseigner tous les champs obligatoires");
