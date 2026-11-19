@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Récupération et nettoyage des saisies (sans htmlspecialchars avant BDD / session)
+// Récupération et nettoyage des saisies
 $loginSaisi = trim($_POST['login'] ?? '');
 $mdpSaisi = $_POST['mdp'] ?? '';
 $mdpConfirmSaisi = $_POST['mdpConfirm'] ?? '';
@@ -10,7 +10,7 @@ $prenomSaisi = trim($_POST['prenom'] ?? '');
 $mailSaisi = trim($_POST['mail'] ?? '');
 $telephoneSaisi = trim($_POST['telephone'] ?? '');
 
-// Garder les saisies dans la session pour pré-remplir le formulaire en cas d'erreur
+// Stockage des saisies dans la session pour pré-remplir le formulaire en cas d'erreur
 $_SESSION['saisie'] = [
     'login'     => $loginSaisi,
     'nom'       => $nomSaisi,
@@ -58,6 +58,9 @@ $mdpHashe = hasher_mdp($mdpSaisi);
 
 $cleChiffrement = getenv('cle_chiffrement');
 $telChiffre = !empty($telephoneSaisi) ? chiffrer_donnee($telephoneSaisi, $cleChiffrement) : null;
+$mailChiffre = !empty($mailSaisi) ? chiffrer_donnee($mailSaisi, $cleChiffrement) : null;
+$prenomChiffre = !empty($prenomSaisi) ? chiffrer_donnee($prenomSaisi, $cleChiffrement) : null;
+$nomChiffre = !empty($nomSaisi) ? chiffrer_donnee($nomSaisi, $cleChiffrement) : null;
 
 // Insertion en base de données avec la requête préparée
 $resultat = false;
@@ -66,11 +69,11 @@ try {
                          VALUES (:nom, :prenom, :pseudo, :mdp, :mail, :telephone)";
     $statement = $pdo->prepare($requeteInsertion);
     $resultat = $statement->execute([
-        ':nom'       => $nomSaisi,
-        ':prenom'    => $prenomSaisi,
+        ':nom'       => $nomChiffre,
+        ':prenom'    => $prenomChiffre,
         ':pseudo'    => $loginSaisi,
         ':mdp'       => $mdpHashe,
-        ':mail'      => $mailSaisi,
+        ':mail'      => $mailChiffre,
         ':telephone' => $telChiffre,
     ]);
 } catch (PDOException $monException) {
