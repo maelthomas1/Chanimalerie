@@ -1,5 +1,15 @@
 <?php
 require "./info_bdd.php";
+require_once "./gestion_secret.php";
+
+if (isset($_SESSION['user'])) {
+    $connecte = true;
+    $prenomBrut = $_SESSION['user']['prenom'];
+    $prenomClair = dechiffrer_donnee($prenomBrut, getenv('cle_chiffrement'));
+} else {
+    $connecte = false;
+    $prenomClair = '';
+}
 
 // Récupérer 3 produits aléatoires pour la section "Coup de coeur"
 // On utilise ORDER BY RAND() pour que l'accueil change à chaque visite
@@ -12,7 +22,7 @@ $coupsDeCoeur = $reponseTop->fetchAll(PDO::FETCH_ASSOC);
 <div class="text-center p-5 mb-4 bg-light rounded-3 shadow-sm border-start border-pink border-5">
     <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold text-pink">
-            Bienvenue chez Chanimalerie <?php echo isset($_SESSION['user']) ? htmlspecialchars($_SESSION['user']['prenom']) : ''; ?> !
+            Bienvenue chez Chanimalerie <?php echo isset($prenomClair) ? htmlspecialchars($prenomClair) : ''; ?> !
         </h1>
         <!-- Ajout de mx-auto pour centrer le bloc de 8 colonnes -->
         <p class="col-md-8 fs-4 text-muted mx-auto">

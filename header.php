@@ -1,9 +1,14 @@
 <?php
 session_start();
+require_once "./gestion_secret.php";
+
 if (isset($_SESSION['user'])) {
     $connecte = true;
+    $prenomBrut = $_SESSION['user']['prenom'];
+    $prenomClair = dechiffrer_donnee($prenomBrut, getenv('cle_chiffrement'));
 } else {
     $connecte = false;
+    $prenomClair = '';
 }
 ?>
 
@@ -66,7 +71,7 @@ if (isset($_SESSION['user'])) {
                 </ul>
                 <div class="d-flex ms-auto align-items-center">
                     <?php if ($connecte) { ?>
-                        <span class="text-muted me-3"><?php echo $_SESSION['user']['prenom']; ?></span>   <!-- TODO déchiffrer le prénom du user -->
+                        <span class="text-muted me-3"><?= $prenomClair ?></span>
 
                         <form action="deconnexion.php" method="post" class="m-0">
                             <button type="submit" class="btn text-pink p-0">

@@ -5,7 +5,7 @@ $login = $_POST["login"] ?? '';
 $mdp = $_POST["mdp"] ?? '';
 
 require "./info_bdd.php";
-require_once "./gestion_secret.php"; // Chargement des fonctions de vérification
+require_once "./gestion_secret.php";
 
 try {
     // On récupère le client et son mot de passe haché grâce à son pseudo
