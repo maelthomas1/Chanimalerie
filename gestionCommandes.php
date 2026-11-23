@@ -1,5 +1,6 @@
 <?php
 require "./info_bdd.php";
+require_once "./gestion_secret.php";
 
 $sql = "SELECT c.idCommande, c.dateCommande, cl.nom, cl.prenom, s.libelleStatut, c.idStatut,
         GROUP_CONCAT(CONCAT(p.nomProduit, ' (x', co.quantite, ')') SEPARATOR '<br>') as detailProduits
@@ -13,6 +14,7 @@ $sql = "SELECT c.idCommande, c.dateCommande, cl.nom, cl.prenom, s.libelleStatut,
 
 $commandes = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 $lesStatuts = $pdo->query("SELECT * FROM statut")->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <div class="container my-5">
@@ -34,8 +36,10 @@ $lesStatuts = $pdo->query("SELECT * FROM statut")->fetchAll(PDO::FETCH_ASSOC);
             <tr>
                 <td><?php echo $cmd['idCommande']; ?></td>
                 <td><?php echo $cmd['dateCommande']; ?></td>
-                <td><?php echo htmlspecialchars($cmd['nom'] . " " . $cmd['prenom']); ?></td>
-                
+                <?php $cmdNomClair = dechiffrer_donnee($cmd['nom'], getenv('cle_chiffrement'));
+                      $cmdPrenomClair = dechiffrer_donnee($cmd['prenom'], getenv('cle_chiffrement')); ?>
+                <td><?php echo htmlspecialchars($cmdNomClair . " " . $cmdPrenomClair); ?></td>
+
                 <!-- Affichage du détail des produits[cite: 2] -->
                 <td class="small">
                     <?php echo $cmd['detailProduits']; ?>

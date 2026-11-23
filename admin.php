@@ -7,10 +7,13 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 require "./info_bdd.php";
+require_once "./gestion_secret.php";
+
+$prenomBrut = $_SESSION['user']['prenom'];
+$prenomClair = dechiffrer_donnee($prenomBrut, getenv('cle_chiffrement'));
 
 
-// Requête pour vérifier si le couple login/mdp est bon
-$requeteSQL = "SELECT codeUser, login, mdp, nom, prenom, role FROM users";
+$requeteSQL = "SELECT idUtilisateur, login, mdp, nom, prenom, role FROM utilisateur";
 
 // Exécution de la requête
 $reponse = $pdo->query($requeteSQL);
@@ -24,7 +27,7 @@ $liste_utilisateurs = $reponse->fetchall(PDO::FETCH_ASSOC);
             <h2 class="mb-4">Administration <i class="bi bi-person-fill-gear"></i></h2>
 
             <div class="alert alert-pink shadow-sm mb-5">
-                <h4>Bienvenue <?php echo $_SESSION['user']['prenom'] ?> - Rôle : <?php echo $_SESSION['roleUser'] ?>
+                <h4>Bienvenue <?php echo $prenomClair ?> - Rôle : <?php echo $_SESSION['roleUser'] ?>
                 </h4>
             </div>
 
