@@ -3,7 +3,7 @@ if (isset($_SESSION['user'])) {
     $connecte = true;
 } else {
     $connecte = false;
-    header("location:index.php?page=connexion&erreur=Il faut être authentifié pour accéder à la partie administration");
+    header("location:index.php?page=connexion&erreur=Il faut être authentifié pour accéder à la partie administration"); // TODO : afficher que après première connexion
     exit();
 }
 require "./info_bdd.php";

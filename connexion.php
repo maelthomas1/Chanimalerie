@@ -10,21 +10,21 @@
     <?php
     if (isset($_GET["erreur"])) {
         $erreur = $_GET["erreur"];
-        ?>
+    ?>
         <div class="mt-2 p-3 w-75 mx-auto alert alert-danger role=" alert">
             <?php echo $erreur ?>
         </div>
-        <?php
+    <?php
     }
     if (isset($_GET["info"])) {
         $info = $_GET["info"];
-        ?>
-        <div class="mt-2 p-3 w-75 mx-auto alert alert-pink role=" alert">
+    ?>
+        <div class="mt-2 p-3 w-75 mx-auto alert alert-danger" role="alert">
             <h2>
                 <?php echo $info ?>
             </h2>
         </div>
-        <?php
+    <?php
     }
     ?>
 

@@ -20,15 +20,14 @@ try {
         // Connexion OK
         $_SESSION['user'] = $user;
         $_SESSION['roleUser'] = $user['role'];
+
         header('location:index.php?page=admin');
         exit();
     } else {
         // Connexion KO
-        header("location:index.php?page=connexion&&erreur=Problème de connexion");
+        header("location:index.php?page=connexion&erreur=Problème de connexion (identifiant ou mot de passe incorrect)");
         exit();
     }
-
 } catch (PDOException $monException) {
     echo "Erreur SQL : " . $monException->getMessage();
 }
-?>

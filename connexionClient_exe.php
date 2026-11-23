@@ -31,8 +31,6 @@ try {
         header("location:index.php?page=connexionClient&&erreur=Problème de connexion (identifiant ou mot de passe incorrect)");
         exit();
     }
-
 } catch (PDOException $monException) {
     echo "Erreur SQL : " . $monException->getMessage();
 }
-?>
