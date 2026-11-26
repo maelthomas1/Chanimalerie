@@ -26,7 +26,7 @@ $lesStatuts = $pdo->query("SELECT * FROM statut")->fetchAll(PDO::FETCH_ASSOC);
             <th>N°</th>
             <th>Date</th>
             <th>Client</th>
-            <th>Contenu de la commande</th> <!-- Nouvelle colonne -->
+            <th>Contenu de la commande</th>
             <th>Statut actuel</th>
             <th>Action</th>
         </tr>
@@ -40,7 +40,7 @@ $lesStatuts = $pdo->query("SELECT * FROM statut")->fetchAll(PDO::FETCH_ASSOC);
                       $cmdPrenomClair = dechiffrer_donnee($cmd['prenom'], getenv('cle_chiffrement')); ?>
                 <td><?php echo htmlspecialchars($cmdNomClair . " " . $cmdPrenomClair); ?></td>
 
-                <!-- Affichage du détail des produits[cite: 2] -->
+                <!-- Affichage du détail des produits -->
                 <td class="small">
                     <?php echo $cmd['detailProduits']; ?>
                 </td>

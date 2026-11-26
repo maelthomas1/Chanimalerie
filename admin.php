@@ -9,8 +9,11 @@ if (isset($_SESSION['user'])) {
 require "./info_bdd.php";
 require_once "./gestion_secret.php";
 
-$prenomBrut = $_SESSION['user']['prenom'];
-$prenomClair = dechiffrer_donnee($prenomBrut, getenv('cle_chiffrement'));
+$loginClair = dechiffrer_donnee($_SESSION['user']['login'], getenv('cle_chiffrement'));
+$prenomClair = dechiffrer_donnee($_SESSION['user']['prenom'], getenv('cle_chiffrement'));
+$nomClair = dechiffrer_donnee($_SESSION['user']['nom'], getenv('cle_chiffrement'));
+$roleClair = dechiffrer_donnee($_SESSION['user']['role'], getenv('cle_chiffrement'));
+
 
 
 $requeteSQL = "SELECT idUtilisateur, login, mdp, nom, prenom, role FROM utilisateur";
@@ -27,7 +30,7 @@ $liste_utilisateurs = $reponse->fetchall(PDO::FETCH_ASSOC);
             <h2 class="mb-4">Administration <i class="bi bi-person-fill-gear"></i></h2>
 
             <div class="alert alert-pink shadow-sm mb-5">
-                <h4>Bienvenue <?php echo $prenomClair ?> - Rôle : <?php echo $_SESSION['roleUser'] ?>
+                <h4>Bienvenue <?= $prenomClair ?> - Rôle : <?= $roleClair ?>
                 </h4>
             </div>
 
@@ -44,11 +47,11 @@ $liste_utilisateurs = $reponse->fetchall(PDO::FETCH_ASSOC);
                     <tbody>
                         <?php foreach ($liste_utilisateurs as $user): ?>
                             <tr>
-                                <td><?php echo $user['login'] ?></td>
-                                <td><?php echo $user['nom'] ?></td>
-                                <td><?php echo $user['prenom'] ?></td>
+                                <td><?php echo $loginClair ?></td>
+                                <td><?php echo $nomClair ?></td>
+                                <td><?php echo $prenomClair ?></td>
                                 <td>
-                                    <span class="badge bg-secondary"><?php echo $user['role'] ?></span>
+                                    <span class="badge bg-secondary"><?php echo $roleClair ?></span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
